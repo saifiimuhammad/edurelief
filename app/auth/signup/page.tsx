@@ -1,0 +1,192 @@
+"use client";
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Heart, Mail, Lock, User } from 'lucide-react';
+import { AuthService } from '@/lib/auth';
+
+export default function SignUpPage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    role: 'donor' as 'student' | 'donor'
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      setLoading(false);
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const user = await AuthService.signUp(
+        formData.email,
+        formData.password,
+        formData.name,
+        formData.role
+      );
+
+      if (user) {
+        // Redirect based on user role
+        if (user.role === 'student') {
+          router.push('/student/request');
+        } else {
+          router.push('/browse');
+        }
+      }
+    } catch (err: any) {
+      setError(err.message || 'An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <>
+      <Navbar />
+      <main className="min-h-screen bg-gray-50 flex items-center justify-center py-12">
+        <div className="max-w-md w-full mx-auto px-4">
+          <Card>
+            <CardHeader className="text-center">
+              <div className="mx-auto w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                <Heart className="h-6 w-6 text-green-600" />
+              </div>
+              <CardTitle className="text-2xl font-bold text-gray-900">
+                Join EduRelief
+              </CardTitle>
+              <p className="text-gray-600">
+                Create your account to start making a difference
+              </p>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    I am a...
+                  </label>
+                  <Select 
+                    value={formData.role} 
+                    onValueChange={(value: 'student' | 'donor') => 
+                      setFormData({ ...formData, role: value })
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="donor">Donor (I want to help students)</SelectItem>
+                      <SelectItem value="student">Student (I need funding)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <User className="h-4 w-4 inline mr-1" />
+                    Full Name
+                  </label>
+                  <Input
+                    type="text"
+                    required
+                    placeholder="John Doe"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <Mail className="h-4 w-4 inline mr-1" />
+                    Email Address
+                  </label>
+                  <Input
+                    type="email"
+                    required
+                    placeholder="your@email.com"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <Lock className="h-4 w-4 inline mr-1" />
+                    Password
+                  </label>
+                  <Input
+                    type="password"
+                    required
+                    placeholder="••••••••"
+                    value={formData.password}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <Lock className="h-4 w-4 inline mr-1" />
+                    Confirm Password
+                  </label>
+                  <Input
+                    type="password"
+                    required
+                    placeholder="••••••••"
+                    value={formData.confirmPassword}
+                    onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                  />
+                </div>
+
+                {error && (
+                  <div className="text-sm text-red-600 bg-red-50 p-3 rounded-md">
+                    {error}
+                  </div>
+                )}
+
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-green-600 hover:bg-green-700"
+                >
+                  {loading ? 'Creating account...' : 'Create Account'}
+                </Button>
+              </form>
+
+              <div className="mt-6 text-center">
+                <p className="text-sm text-gray-600">
+                  Already have an account?{' '}
+                  <Link href="/auth/signin" className="text-green-600 hover:text-green-500 font-medium">
+                    Sign in
+                  </Link>
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+}
