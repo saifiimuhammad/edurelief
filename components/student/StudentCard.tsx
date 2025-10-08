@@ -44,6 +44,7 @@ export default function StudentCard({ student }: StudentCardProps) {
       className="h-full flex flex-col shadow-none hover:shadow-sm transition-shadow duration-200 outline-none border-none"
       onMouseEnter={() => setOnHover(true)}
       onMouseLeave={() => setOnHover(false)}
+      onClick={() => (window.location.href = `/student/${student.id}`)}
     >
       <CardHeader className="p-0">
         <div className={`relative h-48 w-full overflow-hidden rounded-t-lg`}>
