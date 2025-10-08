@@ -58,7 +58,7 @@ export default function SignInPage() {
                 Welcome Back
               </CardTitle>
               <p className="text-gray-600">
-                Sign in to your EduRelief account
+                Sign in to your EDUFUND account
               </p>
             </CardHeader>
             <CardContent>

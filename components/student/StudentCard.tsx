@@ -44,6 +44,7 @@ export default function StudentCard({ student }: StudentCardProps) {
       className="h-full flex flex-col shadow-none hover:shadow-sm transition-shadow duration-200 outline-none border-none"
       onMouseEnter={() => setOnHover(true)}
       onMouseLeave={() => setOnHover(false)}
+      onClick={() => window.location.href = `/student/${student.id}`}
     >
       <CardHeader className="p-0">
         <div className={`relative h-48 w-full overflow-hidden rounded-t-lg`}>
@@ -96,13 +97,13 @@ export default function StudentCard({ student }: StudentCardProps) {
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Progress</span>
               <span className="font-medium text-gray-900">
-                ${student.raisedAmount.toLocaleString()} of $
+                PKR {student.raisedAmount.toLocaleString()} of PKR {" "}
                 {student.targetAmount.toLocaleString()}
               </span>
             </div>
             <Progress value={progressPercentage} className="h-2" />
             <p className="text-sm text-gray-600">
-              ${remainingAmount.toLocaleString()} still needed
+              PKR {remainingAmount.toLocaleString()} still needed
             </p>
           </div>
 

@@ -30,7 +30,7 @@ export default function DonationSuccessPage() {
             <CardContent className="space-y-6">
               <div className="space-y-2">
                 <p className="text-lg text-gray-700">
-                  Your donation of <span className="font-bold text-green-600">${amount}</span> to{' '}
+                  Your donation of <span className="font-bold text-green-600">PKR {amount}</span> to{' '}
                   <span className="font-semibold">{decodeURIComponent(studentName || '')}</span> has been processed successfully.
                 </p>
                 <p className="text-gray-600">
