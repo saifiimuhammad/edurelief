@@ -66,7 +66,7 @@ export default function HeroSection() {
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-green-600">$2.3M</div>
+                <div className="text-3xl font-bold text-green-600">PKR 2.3M</div>
                 <div className="text-sm text-gray-600 mt-1">Total Raised</div>
               </div>
               <div className="text-center">

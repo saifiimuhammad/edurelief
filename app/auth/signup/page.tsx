@@ -75,7 +75,7 @@ export default function SignUpPage() {
                 <Heart className="h-6 w-6 text-green-600" />
               </div>
               <CardTitle className="text-2xl font-bold text-gray-900">
-                Join EduRelief
+                Join EDUFUND
               </CardTitle>
               <p className="text-gray-600">
                 Create your account to start making a difference

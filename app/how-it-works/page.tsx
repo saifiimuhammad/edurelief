@@ -15,7 +15,7 @@ export default function EduReliefHowItWorks() {
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-                Start Fundraising with EduRelief
+                Start Fundraising with EDUFUND
               </h1>
               <p className="text-lg text-gray-600 mb-6">
                 Everything you need to support your education journey is here.
@@ -70,7 +70,7 @@ export default function EduReliefHowItWorks() {
         <section className="py-20 bg-gray-50">
           <div className="max-w-6xl mx-auto px-6 text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900">
-              How to Start an EduRelief
+              How to Start an EDUFUND
             </h2>
           </div>
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 px-6">
@@ -106,7 +106,7 @@ export default function EduReliefHowItWorks() {
             ))}
           </div>
           <div className="text-center mt-12">
-            <Button size="lg">Start EduRelief</Button>
+            <Button size="lg">Start EDUFUND</Button>
           </div>
         </section>
 

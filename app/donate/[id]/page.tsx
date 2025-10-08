@@ -25,7 +25,7 @@ export default function DonatePage() {
   const [message, setMessage] = useState('');
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
 
-  const suggestedAmounts = [25, 50, 100, 250, 500, 1000];
+  const suggestedAmounts = [500, 1000, 1500, 2500, 5000, 10000];
 
   useEffect(() => {
     if (id) {
@@ -62,7 +62,7 @@ export default function DonatePage() {
     
     const amount = parseFloat(donationAmount);
     if (!amount || amount < 5) {
-      alert('Minimum donation amount is $5');
+      alert('Minimum donation amount is PKR 500');
       return;
     }
 
@@ -160,7 +160,7 @@ export default function DonatePage() {
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-600">Progress</span>
                       <span className="font-medium">
-                        ${student.raisedAmount.toLocaleString()} of ${student.targetAmount.toLocaleString()}
+                        PKR {student.raisedAmount.toLocaleString()} of PKR {student.targetAmount.toLocaleString()}
                       </span>
                     </div>
                     <Progress value={progressPercentage} className="h-2" />
@@ -169,7 +169,7 @@ export default function DonatePage() {
                         {progressPercentage.toFixed(0)}% funded
                       </span>
                       <span className="text-gray-600">
-                        ${remainingAmount.toLocaleString()} to go
+                        PKR {remainingAmount.toLocaleString()} to go
                       </span>
                     </div>
                   </div>
@@ -209,12 +209,12 @@ export default function DonatePage() {
                             className={`py-3 ${selectedAmount === amount ? 'bg-green-600 hover:bg-green-700' : ''}`}
                             onClick={() => handleAmountSelect(amount)}
                           >
-                            ${amount}
+                            PKR {amount}
                           </Button>
                         ))}
                       </div>
                       <div className="flex items-center space-x-2">
-                        <span className="text-gray-700">$</span>
+                        <span className="text-gray-700">PKR</span>
                         <Input
                           type="number"
                           placeholder="Custom amount"
@@ -226,7 +226,7 @@ export default function DonatePage() {
                         />
                       </div>
                       <p className="text-xs text-gray-500 mt-2">
-                        Minimum donation: $5
+                        Minimum donation: PKR 500
                       </p>
                     </div>
 
@@ -276,7 +276,7 @@ export default function DonatePage() {
                       ) : (
                         <>
                           <Heart className="h-5 w-5 mr-2" />
-                          Donate ${donationAmount || '0'}
+                          Donate PKR {donationAmount || '0'}
                         </>
                       )}
                     </Button>

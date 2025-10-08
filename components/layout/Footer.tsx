@@ -11,7 +11,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center space-x-2 mb-4">
               <Heart className="h-8 w-8 text-green-600" />
               <span className="text-2xl font-bold text-gray-900">
-                EduRelief
+                EDUFUND
               </span>
             </Link>
             <p className="text-gray-600 mb-4 max-w-md">
@@ -95,7 +95,7 @@ export default function Footer() {
         <div className="border-t border-gray-200 pt-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-500 text-sm">
-              © 2024 EduRelief. All rights reserved.
+              © 2024 EDUFUND. All rights reserved.
             </p>
             <div className="flex items-center space-x-4 mt-4 md:mt-0">
               <span className="text-sm text-gray-500">Supporting UN SDGs:</span>
