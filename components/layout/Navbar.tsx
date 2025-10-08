@@ -29,7 +29,7 @@ export default function Navbar() {
               How It Works
             </Link>
             <Link
-              href=""
+              href="/our-impact"
               className="text-gray-700 hover:text-green-600 transition-colors"
             >
               Our Impact
@@ -39,7 +39,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-1">
             <Heart className="h-5 w-5 text-green-600" />
-            <span className="text-xl font-bold text-gray-900">EduRelief</span>
+            <span className="text-xl font-bold text-gray-900">EDUFUND</span>
           </Link>
 
           {/* Desktop Auth Buttons */}
@@ -89,11 +89,11 @@ export default function Navbar() {
                 </Link>
               </>
             )}
-            <Link href="/student/request">
+            {/* <Link href="/student/request">
               <Button size="sm" className="bg-green-600 hover:bg-green-700">
                 Start Fundraising
               </Button>
-            </Link>
+            </Link> */}
           </div>
 
           {/* Mobile menu button */}
@@ -165,28 +165,28 @@ export default function Navbar() {
                 ) : (
                   <>
                     <Link href="/auth/signin">
-                      <Button variant="ghost" size="sm" className="w-full">
+                      <Button variant="ghost" size="sm" className="w-full mb-2">
                         Sign In
                       </Button>
                     </Link>
                     <Link href="/auth/signup">
                       <Button
                         size="sm"
-                        className="w-full bg-green-600 hover:bg-green-700"
+                        className="w-full bg-green-600 hover:bg-green-700 mb-2"
                       >
                         Get Started
                       </Button>
                     </Link>
                   </>
                 )}
-                <Link href="/student/request">
+                {/* <Link href="/student/request">
                   <Button
                     size="sm"
                     className="w-full bg-green-600 hover:bg-green-700"
                   >
                     Start Fundraising
                   </Button>
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>

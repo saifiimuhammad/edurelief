@@ -34,7 +34,7 @@ export default function FAQSection() {
   const faqs = [
     {
       q: "Is it free to start a fundraiser?",
-      a: "Yes. Starting a fundraiser on EduRelief is completely free. You only pay a small transaction fee charged by the payment processor when you receive donations.",
+      a: "Yes. Starting a fundraiser on EDUFUND is completely free. You only pay a small transaction fee charged by the payment processor when you receive donations.",
     },
     {
       q: "How do I withdraw the funds?",
@@ -42,7 +42,7 @@ export default function FAQSection() {
     },
     {
       q: "Who can donate to my fundraiser?",
-      a: "Anyone across the world can contribute to your EduRelief campaign using a credit or debit card through our secure Stripe integration.",
+      a: "Anyone across the world can contribute to your EDUFUND campaign using a credit or debit card through our secure Stripe integration.",
     },
     {
       q: "Do I need to reach my goal to get the money?",

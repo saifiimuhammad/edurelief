@@ -205,7 +205,7 @@ export default function StudentProfilePage() {
                               variant="secondary"
                               className="text-green-700 bg-green-100"
                             >
-                              ${donation.amount}
+                              PKR {donation.amount}
                             </Badge>
                           </div>
                         ))}
@@ -230,7 +230,7 @@ export default function StudentProfilePage() {
                         <div className="flex justify-between text-sm">
                           <span className="text-gray-600">Raised</span>
                           <span className="font-medium">
-                            ${student.raisedAmount.toLocaleString()} of $
+                             PKR {student.raisedAmount.toLocaleString()} of PKR {" "}
                             {student.targetAmount.toLocaleString()}
                           </span>
                         </div>
@@ -247,7 +247,7 @@ export default function StudentProfilePage() {
                         <div className="flex justify-between">
                           <span className="text-gray-600">Still needed</span>
                           <span className="font-semibold text-gray-900">
-                            ${remainingAmount.toLocaleString()}
+                          PKR {remainingAmount.toLocaleString()}
                           </span>
                         </div>
                         <div className="flex justify-between">

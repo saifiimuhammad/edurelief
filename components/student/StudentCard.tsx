@@ -97,13 +97,13 @@ export default function StudentCard({ student }: StudentCardProps) {
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Progress</span>
               <span className="font-medium text-gray-900">
-                ${student.raisedAmount.toLocaleString()} of $
+                PKR {student.raisedAmount.toLocaleString()} of PKR{" "}
                 {student.targetAmount.toLocaleString()}
               </span>
             </div>
             <Progress value={progressPercentage} className="h-2" />
             <p className="text-sm text-gray-600">
-              ${remainingAmount.toLocaleString()} still needed
+              PKR {remainingAmount.toLocaleString()} still needed
             </p>
           </div>
 
