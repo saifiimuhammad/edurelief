@@ -1,44 +1,51 @@
 "use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Heart, Mail, Lock } from 'lucide-react';
-import { AuthService } from '@/lib/auth';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Heart, Mail, Lock } from "lucide-react";
 
 export default function SignInPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
-      const user = await AuthService.signIn(email, password);
-      if (user) {
-        // Redirect based on user role
-        if (user.role === 'admin') {
-          router.push('/admin');
-        } else if (user.role === 'student') {
-          router.push('/student/dashboard');
-        } else {
-          router.push('/browse');
-        }
-      } else {
-        setError('Invalid email or password');
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Invalid email or password");
       }
-    } catch (err) {
-      setError('An error occurred. Please try again.');
+
+      // Store token in localStorage
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // Redirect by role
+      const role = data.user.role || "student";
+      if (role === "admin") router.push("/admin");
+      else if (role === "student") router.push("/student/dashboard");
+      else router.push("/browse");
+    } catch (err: any) {
+      setError(err.message || "An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -57,9 +64,7 @@ export default function SignInPage() {
               <CardTitle className="text-2xl font-bold text-gray-900">
                 Welcome Back
               </CardTitle>
-              <p className="text-gray-600">
-                Sign in to your EDUFUND account
-              </p>
+              <p className="text-gray-600">Sign in to your EDUFUND account</p>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -102,14 +107,17 @@ export default function SignInPage() {
                   disabled={loading}
                   className="w-full bg-green-600 hover:bg-green-700"
                 >
-                  {loading ? 'Signing in...' : 'Sign In'}
+                  {loading ? "Signing in..." : "Sign In"}
                 </Button>
               </form>
 
               <div className="mt-6 text-center">
                 <p className="text-sm text-gray-600">
-                  Don't have an account?{' '}
-                  <Link href="/auth/signup" className="text-green-600 hover:text-green-500 font-medium">
+                  Don&apos;t have an account?{" "}
+                  <Link
+                    href="/auth/signup"
+                    className="text-green-600 hover:text-green-500 font-medium"
+                  >
                     Sign up
                   </Link>
                 </p>
@@ -117,11 +125,15 @@ export default function SignInPage() {
 
               {/* Demo Accounts */}
               <div className="mt-8 p-4 bg-blue-50 rounded-lg">
-                <h3 className="text-sm font-medium text-blue-900 mb-2">Demo Accounts</h3>
+                <h3 className="text-sm font-medium text-blue-900 mb-2">
+                  Demo Accounts
+                </h3>
                 <div className="text-xs text-blue-800 space-y-1">
                   <div>Student: sarah.chen@university.edu</div>
                   <div>Admin: admin@edurelief.com</div>
-                  <div className="text-blue-600">Password: demo123 (for both)</div>
+                  <div className="text-blue-600">
+                    Password: demo123 (for both)
+                  </div>
                 </div>
               </div>
             </CardContent>

@@ -1,21 +1,26 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
-import StudentCard from '@/components/student/StudentCard';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, Filter } from 'lucide-react';
-import { Database } from '@/lib/database';
+import { useState, useEffect } from "react";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import StudentCard from "@/components/student/StudentCard";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Search, Filter } from "lucide-react";
 
 export default function BrowsePage() {
   const [students, setStudents] = useState<any[]>([]);
   const [filteredStudents, setFilteredStudents] = useState<any[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState('recent');
-  const [filterBy, setFilterBy] = useState('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("recent");
+  const [filterBy, setFilterBy] = useState("all");
 
   useEffect(() => {
     loadStudents();
@@ -25,49 +30,71 @@ export default function BrowsePage() {
     filterAndSortStudents();
   }, [students, searchTerm, sortBy, filterBy]);
 
+  // 🔹 Fetch approved students from your API
   const loadStudents = async () => {
-    const approvedStudents = await Database.getStudents('approved');
-    setStudents(approvedStudents);
+    try {
+      const res = await fetch("/api/students", { cache: "no-store" });
+      const data = await res.json();
+      console.log(data);
+
+      if (data.success && data.students) {
+        setStudents(data.students);
+      } else {
+        setStudents([]);
+        console.error("No students found:", data.message);
+      }
+    } catch (err) {
+      console.error("Error loading students:", err);
+    }
   };
 
   const filterAndSortStudents = () => {
     let filtered = [...students];
 
-    // Apply search filter
+    // Search filter
     if (searchTerm) {
-      filtered = filtered.filter(student => 
-        student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        student.university.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        student.course.toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = filtered.filter(
+        (student) =>
+          student.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          student.university
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          student.course?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
-    // Apply category filter
-    if (filterBy !== 'all') {
-      if (filterBy === 'urgent') {
-        filtered = filtered.filter(student => {
-          const progressPercentage = (student.raisedAmount / student.targetAmount) * 100;
-          return progressPercentage < 25;
+    // Category filter
+    if (filterBy !== "all") {
+      if (filterBy === "urgent") {
+        filtered = filtered.filter((student) => {
+          const progress = (student.raisedAmount / student.targetAmount) * 100;
+          return progress < 25;
         });
-      } else if (filterBy === 'nearly-funded') {
-        filtered = filtered.filter(student => {
-          const progressPercentage = (student.raisedAmount / student.targetAmount) * 100;
-          return progressPercentage >= 75;
+      } else if (filterBy === "nearly-funded") {
+        filtered = filtered.filter((student) => {
+          const progress = (student.raisedAmount / student.targetAmount) * 100;
+          return progress >= 75;
         });
       }
     }
 
-    // Apply sorting
-    if (sortBy === 'recent') {
-      filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-    } else if (sortBy === 'progress') {
+    // Sorting
+    if (sortBy === "recent") {
+      filtered.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+    } else if (sortBy === "progress") {
       filtered.sort((a, b) => {
         const progressA = (a.raisedAmount / a.targetAmount) * 100;
         const progressB = (b.raisedAmount / b.targetAmount) * 100;
         return progressB - progressA;
       });
-    } else if (sortBy === 'amount') {
-      filtered.sort((a, b) => (b.targetAmount - b.raisedAmount) - (a.targetAmount - a.raisedAmount));
+    } else if (sortBy === "amount") {
+      filtered.sort(
+        (a, b) =>
+          b.targetAmount - b.raisedAmount - (a.targetAmount - a.raisedAmount)
+      );
     }
 
     setFilteredStudents(filtered);
@@ -85,8 +112,8 @@ export default function BrowsePage() {
                 Browse Students
               </h1>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Discover amazing students working toward their educational dreams. 
-                Every contribution makes a difference.
+                Discover amazing students working toward their educational
+                dreams. Every contribution makes a difference.
               </p>
             </div>
 
@@ -101,7 +128,7 @@ export default function BrowsePage() {
                   className="pl-10"
                 />
               </div>
-              
+
               <div className="flex gap-4">
                 <Select value={filterBy} onValueChange={setFilterBy}>
                   <SelectTrigger className="w-48">
@@ -111,7 +138,9 @@ export default function BrowsePage() {
                   <SelectContent>
                     <SelectItem value="all">All Students</SelectItem>
                     <SelectItem value="urgent">Urgent (Under 25%)</SelectItem>
-                    <SelectItem value="nearly-funded">Nearly Funded (75%+)</SelectItem>
+                    <SelectItem value="nearly-funded">
+                      Nearly Funded (75%+)
+                    </SelectItem>
                   </SelectContent>
                 </Select>
 
@@ -137,15 +166,19 @@ export default function BrowsePage() {
               <div className="text-gray-400 mb-4">
                 <Search className="h-16 w-16 mx-auto mb-4" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No students found</h3>
-              <p className="text-gray-600">Try adjusting your search or filter criteria.</p>
-              <Button 
-                variant="outline" 
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                No students found
+              </h3>
+              <p className="text-gray-600">
+                Try adjusting your search or filter criteria.
+              </p>
+              <Button
+                variant="outline"
                 className="mt-4"
                 onClick={() => {
-                  setSearchTerm('');
-                  setFilterBy('all');
-                  setSortBy('recent');
+                  setSearchTerm("");
+                  setFilterBy("all");
+                  setSortBy("recent");
                 }}
               >
                 Clear Filters
@@ -155,13 +188,14 @@ export default function BrowsePage() {
             <>
               <div className="mb-8">
                 <p className="text-gray-600">
-                  Showing {filteredStudents.length} {filteredStudents.length === 1 ? 'student' : 'students'}
+                  Showing {filteredStudents.length}{" "}
+                  {filteredStudents.length === 1 ? "student" : "students"}
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredStudents.map((student) => (
-                  <StudentCard key={student.id} student={student} />
+                  <StudentCard key={student._id} student={student} />
                 ))}
               </div>
             </>

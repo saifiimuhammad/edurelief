@@ -19,7 +19,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { Database } from "@/lib/database";
 
 export default function StudentProfilePage() {
   const { id } = useParams();
@@ -28,24 +27,31 @@ export default function StudentProfilePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (id) {
-      loadStudentData();
-    }
+    if (id) loadStudentData();
   }, [id]);
 
   const loadStudentData = async () => {
     setLoading(true);
     try {
-      const studentData = await Database.getStudentById(id as string);
-      if (studentData) {
-        setStudent(studentData);
-        const studentDonations = await Database.getDonationsByStudent(
-          id as string
-        );
-        setDonations(studentDonations);
+      // ✅ Fetch student data from your API
+      const res = await fetch(`/api/students/${id}`, { cache: "no-store" });
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Failed to load student data");
+      }
+
+      setStudent(data.student);
+
+      // Optionally — fetch donations (if that endpoint exists)
+      const donationRes = await fetch(`/api/donations/student/${id}`);
+      if (donationRes.ok) {
+        const donationData = await donationRes.json();
+        setDonations(donationData.donations || []);
       }
     } catch (error) {
       console.error("Error loading student data:", error);
+      setStudent(null);
     } finally {
       setLoading(false);
     }
@@ -230,7 +236,7 @@ export default function StudentProfilePage() {
                         <div className="flex justify-between text-sm">
                           <span className="text-gray-600">Raised</span>
                           <span className="font-medium">
-                             PKR {student.raisedAmount.toLocaleString()} of PKR {" "}
+                            PKR {student.raisedAmount.toLocaleString()} of PKR{" "}
                             {student.targetAmount.toLocaleString()}
                           </span>
                         </div>
@@ -247,7 +253,7 @@ export default function StudentProfilePage() {
                         <div className="flex justify-between">
                           <span className="text-gray-600">Still needed</span>
                           <span className="font-semibold text-gray-900">
-                          PKR {remainingAmount.toLocaleString()}
+                            PKR {remainingAmount.toLocaleString()}
                           </span>
                         </div>
                         <div className="flex justify-between">
