@@ -21,10 +21,12 @@ export default function BrowsePage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("recent");
   const [filterBy, setFilterBy] = useState("all");
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1);
 
   useEffect(() => {
     loadStudents();
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     filterAndSortStudents();
@@ -33,12 +35,15 @@ export default function BrowsePage() {
   // 🔹 Fetch approved students from your API
   const loadStudents = async () => {
     try {
-      const res = await fetch("/api/students", { cache: "no-store" });
+      const res = await fetch(
+        `/api/students?search=${searchTerm}&filter=${filterBy}&sort=${sortBy}&page=${page}&limit=6`,
+        { cache: "no-store" }
+      );
       const data = await res.json();
-      console.log(data);
 
       if (data.success && data.students) {
         setStudents(data.students);
+        setPages(data.pagination.pages);
       } else {
         setStudents([]);
         console.error("No students found:", data.message);
@@ -197,6 +202,20 @@ export default function BrowsePage() {
                 {filteredStudents.map((student) => (
                   <StudentCard key={student._id} student={student} />
                 ))}
+              </div>
+              <div className="flex justify-center mt-8 gap-4">
+                <Button disabled={page <= 1} onClick={() => setPage(page - 1)}>
+                  Previous
+                </Button>
+                <span className="flex items-center">
+                  Page {page} of {pages}
+                </span>
+                <Button
+                  disabled={page >= pages}
+                  onClick={() => setPage(page + 1)}
+                >
+                  Next
+                </Button>
               </div>
             </>
           )}

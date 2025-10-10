@@ -42,8 +42,7 @@ export default function SignInPage() {
       // Redirect by role
       const role = data.user.role || "student";
       if (role === "admin") router.push("/admin");
-      else if (role === "student") router.push("/student/dashboard");
-      else router.push("/browse");
+      else router.push("/");
     } catch (err: any) {
       setError(err.message || "An error occurred. Please try again.");
     } finally {
@@ -121,20 +120,6 @@ export default function SignInPage() {
                     Sign up
                   </Link>
                 </p>
-              </div>
-
-              {/* Demo Accounts */}
-              <div className="mt-8 p-4 bg-blue-50 rounded-lg">
-                <h3 className="text-sm font-medium text-blue-900 mb-2">
-                  Demo Accounts
-                </h3>
-                <div className="text-xs text-blue-800 space-y-1">
-                  <div>Student: sarah.chen@university.edu</div>
-                  <div>Admin: admin@edurelief.com</div>
-                  <div className="text-blue-600">
-                    Password: demo123 (for both)
-                  </div>
-                </div>
               </div>
             </CardContent>
           </Card>

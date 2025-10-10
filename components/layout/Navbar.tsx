@@ -4,11 +4,20 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Heart, User } from "lucide-react";
-import { AuthService } from "@/lib/auth";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const currentUser = AuthService.getCurrentUser();
+  const currentUser = JSON.parse(localStorage.getItem("user") as string);
+  console.log(currentUser);
+  const router = useRouter();
+
+  const handleSignout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    alert("Logged out successfully!");
+    router.push("/");
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
@@ -39,20 +48,25 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-1">
             <Heart className="h-5 w-5 text-green-600" />
-            <span className="text-xl font-bold text-gray-900">EDUFUND</span>
+            <span className="text-xl font-bold text-gray-900">Edufund</span>
           </Link>
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             {currentUser ? (
               <>
+                <Link href="">
+                  <Button variant="ghost" size="sm" className="w-full">
+                    About Us
+                  </Button>
+                </Link>
                 <Link
                   href={
                     currentUser.role === "student"
-                      ? "/student/dashboard"
+                      ? `/dashboard/${currentUser.studentId}`
                       : currentUser.role === "admin"
                       ? "/admin"
-                      : "/donor/profile"
+                      : `/donor/${currentUser._id}`
                   }
                 >
                   <Button
@@ -64,19 +78,17 @@ export default function Navbar() {
                     <span>{currentUser.name}</span>
                   </Button>
                 </Link>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    AuthService.signOut();
-                    window.location.href = "/";
-                  }}
-                >
+                <Button variant="outline" size="sm" onClick={handleSignout}>
                   Sign Out
                 </Button>
               </>
             ) : (
               <>
+                <Link href="">
+                  <Button variant="ghost" size="sm" className="w-full">
+                    About Us
+                  </Button>
+                </Link>
                 <Link href="/auth/signin">
                   <Button variant="ghost" size="sm">
                     Sign In
@@ -135,11 +147,16 @@ export default function Navbar() {
               <div className="pt-4 border-t border-gray-200 space-y-2">
                 {currentUser ? (
                   <>
+                    <Link href="">
+                      <Button variant="ghost" size="sm" className="w-full">
+                        About Us
+                      </Button>
+                    </Link>
                     <Link
                       href={
                         currentUser.role === "student"
-                          ? "/student/dashboard"
-                          : "/donor/profile"
+                          ? `/dashboard/${currentUser.studentId}`
+                          : `/donor/${currentUser._id}`
                       }
                     >
                       <Button
@@ -154,16 +171,18 @@ export default function Navbar() {
                       variant="outline"
                       size="sm"
                       className="w-full"
-                      onClick={() => {
-                        AuthService.signOut();
-                        window.location.href = "/";
-                      }}
+                      onClick={handleSignout}
                     >
                       Sign Out
                     </Button>
                   </>
                 ) : (
                   <>
+                    <Link href="">
+                      <Button variant="ghost" size="sm" className="w-full">
+                        About Us
+                      </Button>
+                    </Link>
                     <Link href="/auth/signin">
                       <Button variant="ghost" size="sm" className="w-full mb-2">
                         Sign In

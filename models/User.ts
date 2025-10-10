@@ -5,7 +5,7 @@ const schema = new Schema(
     // Common fields
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String }, // optional if using social login
+    password: { type: String, select: false }, // optional if using social login
     role: {
       type: String,
       enum: ["student", "donor", "admin"],

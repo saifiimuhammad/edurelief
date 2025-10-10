@@ -5,7 +5,7 @@ export default function HowItWorks() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-            How EDUFUND Works
+            How Edufund Works
           </h2>
           <p className="mt-3 text-lg text-gray-600">
             Simple, transparent, and secure fundraising for education

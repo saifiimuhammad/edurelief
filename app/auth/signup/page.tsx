@@ -80,9 +80,7 @@ export default function SignUpPage() {
 
       if (!res.ok) throw new Error(data.message || "Registration failed");
 
-      // ✅ Redirect by role
-      if (formData.role === "student") router.push("/student/request");
-      else router.push("/browse");
+      router.push("/signin");
     } catch (err: any) {
       setError(err.message || "Something went wrong");
     } finally {

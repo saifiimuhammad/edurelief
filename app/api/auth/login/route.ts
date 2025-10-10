@@ -21,7 +21,8 @@ export async function POST(req: Request) {
     await connectDb();
 
     // Find user
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select("+password");
+    console.log(user.password);
     if (!user) {
       return NextResponse.json(
         { success: false, message: "Invalid email or password." },
