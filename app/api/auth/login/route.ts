@@ -46,7 +46,8 @@ export async function POST(req: Request) {
     );
 
     // Return user info (without password)
-    const { password: _, ...userData } = user._doc;
+    const userObj = user.toObject();
+    const { password: _, ...userData } = userObj;
 
     console.log(true, "login successfull", token, userData);
 
