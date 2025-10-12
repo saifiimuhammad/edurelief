@@ -44,7 +44,9 @@ export async function GET() {
       _id: { $in: topDonorsAgg.map((d) => d._id) },
     });
     const topDonorsFinal = topDonorsAgg.map((d) => {
-      const user = topDonors.find((u) => u._id.equals(d._id));
+      const user = topDonors.find((u: (typeof topDonors)[0]) =>
+        (u._id as any).equals(d._id)
+      );
       return {
         donorId: d._id,
         name: user?.name || "Unknown",
@@ -65,7 +67,9 @@ export async function GET() {
       _id: { $in: topStudentsAgg.map((d) => d._id) },
     });
     const topStudentsFinal = topStudentsAgg.map((d) => {
-      const student = topStudents.find((u) => u._id.equals(d._id));
+      const student = topStudents.find((u: (typeof topStudents)[0]) =>
+        (u._id as any).equals(d._id)
+      );
       return {
         studentId: d._id,
         name: student?.name || "Unknown",
