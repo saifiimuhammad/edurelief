@@ -36,9 +36,10 @@ export default function SignInPage() {
       }
 
       // Store token in localStorage
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-
+      if (typeof window !== "undefined") {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+      }
       // Redirect by role
       const role = data.user.role || "student";
       if (role === "admin") router.push("/admin");
