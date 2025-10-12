@@ -44,11 +44,7 @@ export default function StudentProfilePage() {
         setEditData(data.student);
       }
 
-      const donationRes = await fetch(`/api/donations/student/${id}`);
-      if (donationRes.ok) {
-        const donationData = await donationRes.json();
-        setDonations(donationData.donations || []);
-      }
+      setDonations([]);
     } catch (err) {
       console.error(err);
     } finally {
