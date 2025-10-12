@@ -1,6 +1,17 @@
-import { Schema, models, model } from "mongoose";
+import mongoose, { Schema, models, model, Document, Model } from "mongoose";
 
-const schema = new Schema(
+// Define interface for Payment document
+interface PaymentDoc extends Document {
+  paymentId: string;
+  amount: number;
+  status: string;
+  donorId: mongoose.Types.ObjectId;
+  studentId: mongoose.Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const paymentSchema = new Schema<PaymentDoc>(
   {
     paymentId: { type: String, required: true },
     amount: { type: Number, required: true },
@@ -19,4 +30,7 @@ const schema = new Schema(
   { timestamps: true }
 );
 
-export const Payment = models.Payment || model("Payment", schema);
+// Type-safe export
+export const Payment: Model<PaymentDoc> =
+  (models.Payment as Model<PaymentDoc>) ||
+  model<PaymentDoc>("Payment", paymentSchema);

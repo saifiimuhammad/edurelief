@@ -1,6 +1,17 @@
-import { Schema, models, model } from "mongoose";
+import mongoose,{ Schema, models, model, Document, Model } from "mongoose";
 
-const schema = new Schema(
+interface DonationDoc extends Document {
+  donorId: mongoose.Types.ObjectId;
+  donorEmail: string;
+  studentId: mongoose.Types.ObjectId;
+  amount: number;
+  message?: string;
+  paymentId: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const donationSchema = new Schema<DonationDoc>(
   {
     donorId: {
       type: Schema.Types.ObjectId,
@@ -20,4 +31,7 @@ const schema = new Schema(
   { timestamps: true }
 );
 
-export const Donation = models.Donation || model("Donation", schema);
+// Type-safe model export
+export const Donation: Model<DonationDoc> =
+  (models.Donation as Model<DonationDoc>) ||
+  model<DonationDoc>("Donation", donationSchema);

@@ -1,23 +1,44 @@
-import { Schema, model, models } from "mongoose";
+import { Schema, model, models, Document, Model } from "mongoose";
 
-const schema = new Schema(
+// Define interface for User document
+interface UserDoc extends Document {
+  name: string;
+  email: string;
+  password?: string;
+  role: "student" | "donor" | "admin";
+  profileImage?: string;
+  phone?: string;
+  address?: string;
+  studentId?: string;
+  university?: string;
+  course?: string;
+  semester?: string;
+  targetAmount?: number;
+  raisedAmount?: number;
+  story?: string;
+  cnic?: string;
+  father_cnic?: string;
+  utility_bill?: string;
+  income_proof?: string;
+  status: "pending" | "approved" | "rejected";
+  isAdmin: () => boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const userSchema = new Schema<UserDoc>(
   {
-    // Common fields
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, select: false }, // optional if using social login
+    password: { type: String, select: false },
     role: {
       type: String,
       enum: ["student", "donor", "admin"],
       default: "student",
     },
-
-    // Common optional fields
     profileImage: { type: String },
     phone: { type: String },
     address: { type: String },
-
-    // Student-specific fields
     studentId: { type: String },
     university: { type: String },
     course: { type: String },
@@ -29,8 +50,6 @@ const schema = new Schema(
     father_cnic: { type: String },
     utility_bill: { type: String },
     income_proof: { type: String },
-
-    // Status (for student approval)
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],
@@ -40,9 +59,10 @@ const schema = new Schema(
   { timestamps: true }
 );
 
-// optional virtuals for role-based checks
-schema.methods.isAdmin = function () {
+userSchema.methods.isAdmin = function () {
   return this.role === "admin";
 };
 
-export const User = models.User || model("User", schema);
+// Type-safe model export
+export const User: Model<UserDoc> =
+  (models.User as Model<UserDoc>) || model<UserDoc>("User", userSchema);
