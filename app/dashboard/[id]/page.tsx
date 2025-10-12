@@ -17,6 +17,7 @@ const Progress = dynamic(
   }
 );
 import { Button } from "@/components/ui/button";
+import dynamic from "next/dynamic";
 
 interface Student {
   _id: string;
