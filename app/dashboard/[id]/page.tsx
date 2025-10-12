@@ -9,7 +9,13 @@ import {
   CardHeader,
   CardFooter,
 } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+
+const Progress = dynamic(
+  () => import("@/components/ui/progress").then((mod) => mod.Progress),
+  {
+    ssr: false,
+  }
+);
 import { Button } from "@/components/ui/button";
 
 interface Student {
