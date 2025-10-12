@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Heart, User } from "lucide-react";
@@ -8,9 +8,13 @@ import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const currentUser = JSON.parse(localStorage.getItem("user") as string);
-  console.log(currentUser);
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) setCurrentUser(JSON.parse(user));
+  }, []);
 
   const handleSignout = () => {
     localStorage.removeItem("token");
