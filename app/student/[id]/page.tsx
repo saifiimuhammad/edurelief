@@ -264,7 +264,10 @@ export default function StudentProfilePage() {
                         </div>
                       </div>
 
-                      <Link href={`/donate/${student.id}`} className="block">
+                      <Link
+                        href={`/donate/${student.studentId}`}
+                        className="block"
+                      >
                         <Button className="w-full bg-green-600 hover:bg-green-700 text-lg py-3">
                           <Heart className="h-5 w-5 mr-2" />
                           Donate Now

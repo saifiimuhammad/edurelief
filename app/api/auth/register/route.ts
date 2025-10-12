@@ -78,7 +78,7 @@ export async function POST(req: Request) {
       name,
       email,
       password: hashedPassword,
-      studentId: "fffdgfdfhf",
+      studentId: `stud-${uuidv4()}`,
       role,
       phone,
       address,
