@@ -35,6 +35,7 @@ export default function DonorProfilePage() {
     email: "",
     phone: "",
     address: "",
+    profileImage: "",
   });
   const [saving, setSaving] = useState(false);
 

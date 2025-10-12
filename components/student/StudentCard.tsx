@@ -1,15 +1,8 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardFooter,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { MapPin, Calendar, GraduationCap, Heart } from "lucide-react";
-import Link from "next/link";
+import { CheckCircle, GraduationCap, Check } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -75,9 +68,14 @@ export default function StudentCard({ student }: StudentCardProps) {
       <CardContent className="flex-1 p-6">
         <div className="space-y-4">
           <div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              {student.name}
-            </h3>
+            <div className="flex items-center justify-between w-full">
+              <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-1">
+                {student.name}
+              </h3>
+              <div className="py-1 px-2 bg-gray-50 rounded-sm text-xs flex gap-1">
+                <Check className="h-4 w-4 text-green-500" /> Verified
+              </div>
+            </div>
             {/* <div className="space-y-1 text-sm text-gray-600">
               <div className="flex items-center">
                 <MapPin className="h-4 w-4 mr-2" />
