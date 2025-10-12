@@ -132,7 +132,7 @@ export default function StudentProfilePage() {
                   <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
                     <div className="relative w-32 h-32 rounded-full overflow-hidden ring-4 ring-green-200">
                       <Image
-                        src={student.profileImage || "/placeholder.png"}
+                        src={student.profileImage || ""}
                         alt="Profile"
                         fill
                         className="object-cover"
