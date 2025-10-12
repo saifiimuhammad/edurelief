@@ -1,10 +1,17 @@
 "use client";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { CheckCircle, GraduationCap, Check } from "lucide-react";
+import { Check, GraduationCap } from "lucide-react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState } from "react";
+
+const Progress = dynamic(
+  () => import("@/components/ui/progress").then((mod) => mod.Progress),
+  {
+    ssr: false,
+  }
+);
 
 interface StudentCardProps {
   student: {

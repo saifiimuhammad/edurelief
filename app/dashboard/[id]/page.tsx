@@ -5,7 +5,14 @@ import Navbar from "@/components/layout/Navbar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+import dynamic from "next/dynamic";
+
+const Progress = dynamic(
+  () => import("@/components/ui/progress").then((mod) => mod.Progress),
+  {
+    ssr: false,
+  }
+);
 import { motion } from "framer-motion";
 import { Edit, Target, Trash2, Users, X } from "lucide-react";
 import Image from "next/image";

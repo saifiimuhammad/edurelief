@@ -6,7 +6,14 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+import dynamic from "next/dynamic";
+
+const Progress = dynamic(
+  () => import("@/components/ui/progress").then((mod) => mod.Progress),
+  {
+    ssr: false,
+  }
+);
 import { Badge } from "@/components/ui/badge";
 import {
   MapPin,

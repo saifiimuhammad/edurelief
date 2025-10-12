@@ -8,7 +8,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+import dynamic from "next/dynamic";
+
+const Progress = dynamic(
+  () => import("@/components/ui/progress").then((mod) => mod.Progress),
+  {
+    ssr: false,
+  }
+);
 import { Heart, Lock, CreditCard, User, MessageCircle } from "lucide-react";
 
 export default function DonatePage() {
