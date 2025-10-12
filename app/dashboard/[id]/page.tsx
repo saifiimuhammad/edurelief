@@ -42,6 +42,7 @@ export default function DashboardPage() {
           cache: "no-store",
         });
         const data = await res.json();
+        console.log(data);
 
         if (data.success && Array.isArray(data.students)) {
           setStudents(data.students);
