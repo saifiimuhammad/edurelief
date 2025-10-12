@@ -89,7 +89,7 @@ export default function StudentProfilePage() {
               Student Not Found
             </h1>
             <p className="text-gray-600 mb-4">
-              The student profile you're looking for doesn't exist.
+              The student profile you&apos;re looking for doesn&apos;t exist.
             </p>
             <Link href="/browse">
               <Button>Browse All Students</Button>
@@ -205,7 +205,7 @@ export default function StudentProfilePage() {
                               </div>
                               {donation.message && (
                                 <p className="text-sm text-gray-600 mt-1 italic">
-                                  "{donation.message}"
+                                  &quot;{donation.message}&quot;
                                 </p>
                               )}
                               <p className="text-xs text-gray-500 mt-1">
@@ -283,7 +283,7 @@ export default function StudentProfilePage() {
 
                       <p className="text-xs text-gray-500 text-center">
                         Secure payment processing via Stripe. Your donation goes
-                        directly to {student.name}'s education.
+                        directly to {student.name}&apos;s education.
                       </p>
                     </CardContent>
                   </Card>
@@ -295,7 +295,7 @@ export default function StudentProfilePage() {
                         Help spread the word
                       </h3>
                       <p className="text-sm text-gray-600 mb-4">
-                        Share {student.name}'s story with your friends and
+                        Share {student.name}&apos;s story with your friends and
                         family.
                       </p>
                       <div className="flex gap-2">
