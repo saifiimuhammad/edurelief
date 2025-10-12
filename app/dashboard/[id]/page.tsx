@@ -7,17 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import dynamic from "next/dynamic";
 
-const Progress = dynamic(
-  () => import("@/components/ui/progress").then((mod) => mod.Progress),
-  {
-    ssr: false,
-  }
-);
 import { motion } from "framer-motion";
 import { Edit, Target, Trash2, Users, X } from "lucide-react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Progress } from "@/components/ui/progress";
 
 export default function StudentProfilePage() {
   const { id } = useParams();
