@@ -80,7 +80,7 @@ export default function SignUpPage() {
 
       if (!res.ok) throw new Error(data.message || "Registration failed");
 
-      router.push("/signin");
+      router.push("/auth/signin");
     } catch (err: any) {
       setError(err.message || "Something went wrong");
     } finally {
