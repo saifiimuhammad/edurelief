@@ -1,29 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
-import {
-  MapPin,
-  Calendar,
-  GraduationCap,
-  Heart,
-  Users,
-  Clock,
-  Target,
-  Edit,
-  Trash2,
-  Upload,
-  X,
-} from "lucide-react";
+import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/Navbar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import { motion } from "framer-motion";
+import { Edit, Target, Trash2, Users, X } from "lucide-react";
+import Image from "next/image";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function StudentProfilePage() {
   const { id } = useParams();

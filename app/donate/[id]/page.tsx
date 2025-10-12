@@ -58,59 +58,6 @@ export default function DonatePage() {
     e.preventDefault();
 
     router.push(`/donate/${id}/success`);
-
-    // const amount = parseFloat(donationAmount);
-    // if (!amount || amount < 500) {
-    //   alert("Minimum donation amount is PKR 500");
-    //   return;
-    // }
-
-    // if (!donorEmail) {
-    //   alert("Please enter your email address");
-    //   return;
-    // }
-
-    // setProcessing(true);
-
-    // try {
-    //   // Create PaymentIntent via backend
-    //   const res = await fetch("/api/payments/create-intent", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ amount, donorEmail, studentId: id }),
-    //   });
-
-    //   const data = await res.json();
-    //   if (!res.ok) throw new Error(data.message || "Payment failed");
-
-    //   // Simulate successful Stripe confirmation
-    //   await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    //   // Record donation
-    //   await fetch("/api/donations", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //       donorEmail,
-    //       studentId: id,
-    //       amount,
-    //       message: message || undefined,
-    //       paymentId: data.paymentId,
-    //     }),
-    //   });
-
-    //   // Redirect
-    //   router.push(
-    //     `/donate/${id}/success?amount=${amount}&student=${encodeURIComponent(
-    //       student.name
-    //     )}`
-    //   );
-    // } catch (error) {
-    //   console.error("Donation Error:", error);
-    //   alert("Something went wrong while processing your donation.");
-    // } finally {
-    //   setProcessing(false);
-    // }
   };
 
   if (loading) {

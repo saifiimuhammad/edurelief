@@ -1,12 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Heart, Users, GraduationCap, ArrowRight } from "lucide-react";
-import Link from "next/link";
-import LightRays from "../LightRays";
-import { BackgroundBeams } from "@/components/ui/shadcn-io/background-beams";
 import { InteractiveGridPattern } from "@/components/ui/shadcn-io/interactive-grid-pattern";
 import { cn } from "@/lib/utils";
+import { ArrowRight, Heart } from "lucide-react";
+import Link from "next/link";
 
 export default function HeroSection() {
   return (
@@ -66,7 +64,9 @@ export default function HeroSection() {
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-green-600">PKR 2.3M</div>
+                <div className="text-3xl font-bold text-green-600">
+                  PKR 2.3M
+                </div>
                 <div className="text-sm text-gray-600 mt-1">Total Raised</div>
               </div>
               <div className="text-center">
